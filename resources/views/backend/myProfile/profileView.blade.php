@@ -3,13 +3,32 @@
     <div class="card">
         <div class="card-header">
             <div class="d-flex gap-3">
-                <img class="rounded-3" style="height: 100px" src="{{ asset('assets/img/avatars/1.png') }}" alt="">
+                {{-- <img id="blah" class="rounded-3" style="height: 100px" src="{{ Auth::user()->profile_image ? asset('storage/profileImages/' . Auth::user()->profile_image)  : asset('assets/img/avatars/1.png') }}"
+                    alt=""> --}}
+
+                    <img id="blah" class="rounded-3" style="height: 100px" src="{{ asset('storage/profileImages/' . Auth::user()->profile_image ?? 'assets/img/avatars/1.png') }}"
+                     alt="">
+
 
                 <div>
-                    <h4 class="mb-0">User Name</h4>
-                    <small>Full stack web Developer</small>
+                    <h4 class="mb-0">{{ Auth::user()->name }}</h4>
+                    <small>{{ Auth::user()->designation ?? 'Full stack web Developer' }}</small>
 
-                    <button class="btn btn-primary d-flex align-items-center gap-2 mt-2">Update Image <iconify-icon icon="clarity:upload-cloud-line" width="20" height="20"></iconify-icon></button>
+                    <form action="{{ route('dashboard.my.profile.image') }}" method="post" enctype="multipart/form-data">
+                        @csrf
+                        <input name="profile_image" hidden accept="image/*" type='file' id="imgInp" />
+                        <div class="d-flex gap-2">
+
+                            <label for="imgInp">
+                                <span class="btn btn-outline-primary d-flex align-items-center gap-2 mt-2">Upload Image
+                                <iconify-icon icon="clarity:upload-cloud-line" width="20"
+                                    height="20"></iconify-icon></span>
+                            </label>
+
+                            <button type="submit" class="btn btn-primary d-flex align-items-center gap-2 mt-2">Save Image
+                                <iconify-icon icon="carbon:save" width="24" height="24"></iconify-icon></button>
+                        </div>
+                    </form>
 
                 </div>
             </div>
@@ -41,10 +60,11 @@
                             value="{{ $user->name }}">
 
                         <label for="name">Designation :</label>
-                        <input class="form-control p-3 mb-2" type="text" name="designation" placeholder="designation">
+                        <input class="form-control p-3 mb-2" type="text" name="designation" placeholder="designation"
+                            value="{{ $user->designation }}">
 
                         @error('designation')
-                             <p class="text-danger">{{ $message }}</p>
+                            <p class="text-danger">{{ $message }}</p>
                         @enderror
 
                         <label for="name">Email :</label>
@@ -58,12 +78,15 @@
 
                 {{-- USER PASSWORD --}}
                 <div class="col-lg-6">
-                    <form action="" method="">
+                    <form action="{{ route('dashboard.my.profile.password') }}" method="post">
                         @csrf
 
                         <label for="current-password">Current Password :</label>
-                        <input id="current-password" class="form-control p-3 mb-2" type="password" name="password"
+                        <input id="current-password" class="form-control p-3 mb-2" type="password" name="current_password"
                             placeholder="current password">
+                        @if (session('error'))
+                            <p class="text-danger">{{ session('error') }}</p>
+                        @endif
 
                         <label for="new-password">New Password :</label>
                         <input id="new-password" class="form-control p-3 mb-2" type="password" name="new_password"
@@ -72,7 +95,9 @@
                         <label for="confirm-password">Confirm Password :</label>
                         <input id="confirm-password" class="form-control p-3 mb-2" type="password" name="confirm_password"
                             placeholder="confirm password">
-
+                        @if (session('confirm_error'))
+                            <p class="text-danger">{{ session('confirm_error') }}</p>
+                        @endif
 
                         <button class="btn btn-primary w-100 p-2">Password Update</button>
 
@@ -85,4 +110,12 @@
 
 @push('backed_js')
     <script src="https://code.iconify.design/iconify-icon/3.0.0/iconify-icon.min.js"></script>
+    <script>
+        imgInp.onchange = evt => {
+            const [file] = imgInp.files
+            if (file) {
+                blah.src = URL.createObjectURL(file)
+            }
+        }
+    </script>
 @endpush
