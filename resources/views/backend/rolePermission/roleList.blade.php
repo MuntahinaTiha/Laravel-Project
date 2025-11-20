@@ -7,8 +7,11 @@
         </div>
 
         <div class="card-body">
-            <form action="" method="post">
+            <form action="{{ route('dashboard.rolePermission.role.list.store') }}" method="post">
                 @csrf
+
+                <input type="hidden" name="user_id" value="{{ $user->id }}">
+
                 <table class="table table-bordered table-striped text-center">
                     <tr>
                         <th>#</th>
@@ -22,7 +25,7 @@
                                 <label for="role_{{ $role->id }}">{{ $role->name }}</label>
                             </td>
                             <td>
-                                <input type="checkbox" id="role_{{ $role->id }}">
+                                <input {{ $user->hasRole($role->name) ? 'checked' : '' }} value="{{ $role->name }}" name="roles[]" type="checkbox" id="role_{{ $role->id }}">
                             </td>
                         </tr>
                     @empty

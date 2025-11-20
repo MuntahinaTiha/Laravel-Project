@@ -139,7 +139,7 @@
             </li>
 
             <!-- Layouts -->
-            <li class="menu-item  {{ Route::is('dashboard.rolePermission.role.list') || Route::is('dashboard.rolePermission.create.role') || Route::is('dashboard.rolePermission.list.users') || Route::is('dashboard.rolePermission.create.user') ? 'active open':'' }}">
+            <li class="menu-item  {{ Route::is('dashboard.rolePermission.*') ? 'active open':'' }}">
               <a href="javascript:void(0);" class="menu-link menu-toggle">
                 <iconify-icon icon="mdi:key-outline" width="24" height="24"></iconify-icon> &nbsp; &nbsp;
                 <div data-i18n="Layouts">Role Permission</div>
@@ -159,6 +159,11 @@
                 <li class="menu-item {{ Route::is('dashboard.rolePermission.create.role') ? 'active':'' }}">
                   <a href="{{ route('dashboard.rolePermission.create.role') }}" class="menu-link">
                     <div data-i18n="Without menu">Create Role</div>
+                  </a>
+                </li>
+                <li class="menu-item {{ Route::is('dashboard.rolePermission.roles.all') ? 'active':'' }}">
+                  <a href="{{ route('dashboard.rolePermission.roles.all') }}" class="menu-link">
+                    <div data-i18n="Without menu">Role List</div>
                   </a>
                 </li>
               </ul>

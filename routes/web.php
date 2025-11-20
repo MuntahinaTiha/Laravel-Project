@@ -42,6 +42,10 @@ Route::prefix('dashboard/')->name('dashboard.')->middleware(['auth', 'verified']
         Route::get('create-role', [RolePermissionController::class,'createRole'])->name(name: 'create.role');
         Route::post('create-role', [RolePermissionController::class,'createRoleStore'])->name(name: 'create.role.store');
         Route::get('role-list/{id}', [RolePermissionController::class,'roleList'])->name(name: 'role.list');
+        Route::post('role-list', [RolePermissionController::class,'roleListStore'])->name(name: 'role.list.store');
+        Route::get('all-roles', [RolePermissionController::class,'allRoles'])->name(name: 'roles.all');
+        Route::get('permissions/{id}', [RolePermissionController::class,'permissions'])->name(name: 'permissions');
+        Route::post('permissions', [RolePermissionController::class,'permissionsStore'])->name(name: 'permissions.store');
 
     });
 

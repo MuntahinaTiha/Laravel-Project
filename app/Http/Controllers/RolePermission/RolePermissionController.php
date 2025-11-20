@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers\RolePermission;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use SweetAlert2\Laravel\Swal;
 use Spatie\Permission\Models\Role;
 use App\Http\Controllers\Controller;
-use Illuminate\Foundation\Auth\User;
+// use Illuminate\Foundation\Auth\User;
 use Illuminate\Support\Facades\Hash;
+use Spatie\Permission\Models\Permission;
 
 
 class RolePermissionController extends Controller
@@ -119,6 +121,17 @@ class RolePermissionController extends Controller
         return view('backend.rolePermission.roleList', compact('roles' ,'user'));
     }
 
+    //* roleListStore
+    public function roleListStore(Request $request){
+        $user = User::find($request->user_id);
+        $user->syncRoles($request->roles);
+          //  * SweetAlert notification
+        Swal::success([
+        'title' => 'Role Assigned Successfully!',
+           ]);
+        return back();
+    }
+
 
     //* createRole
     public function createRole(){
@@ -139,6 +152,31 @@ class RolePermissionController extends Controller
     return back();
     }
 
+
+    //*allRoles
+    public function allRoles(){
+        $roles = Role::get();
+        return view('backend.rolePermission.allRoles', compact('roles'));
+    }
+
+    //* permissions
+    public function permissions($id){
+        $role = Role::find($id);
+        $permissions = Permission::latest()->get();
+        return view('backend.rolePermission.permissions', compact('role', 'permissions'));
+    }
+
+    //*permissionsStore
+    public function permissionsStore(Request $request){
+    //   dd($request->all());
+      $role = Role::find($request->role_name);
+      $role->syncPermissions($request->permissions);
+      //  * SweetAlert notification
+        Swal::success([
+        'title' => 'Permissions Assigned Successfully!',
+           ]);
+        return back();
+    }
 
 
 
