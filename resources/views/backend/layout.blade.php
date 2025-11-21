@@ -138,6 +138,7 @@
               </a>
             </li>
 
+            {{-- @can('create') --}}
             <!-- Layouts -->
             <li class="menu-item  {{ Route::is('dashboard.rolePermission.*') ? 'active open':'' }}">
               <a href="javascript:void(0);" class="menu-link menu-toggle">
@@ -183,6 +184,9 @@
                 </li>
               </ul>
             </li>
+
+            {{-- @endcan --}}
+
           </ul>
         </aside>
         <!-- / Menu -->

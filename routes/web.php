@@ -44,6 +44,13 @@ Route::prefix('dashboard/')->name('dashboard.')->middleware(['auth', 'verified']
         Route::get('role-list/{id}', [RolePermissionController::class,'roleList'])->name(name: 'role.list');
         Route::post('role-list', [RolePermissionController::class,'roleListStore'])->name(name: 'role.list.store');
         Route::get('all-roles', [RolePermissionController::class,'allRoles'])->name(name: 'roles.all');
+//* PENDING
+        Route::get('edit-role/{id}', [RolePermissionController::class,'editRole'])->name(name: 'edit.role');
+
+        Route::get('delete-role/{id}', [RolePermissionController::class,'deleteRole'])->name(name: 'delete.role');
+
+
+
         Route::get('permissions/{id}', [RolePermissionController::class,'permissions'])->name(name: 'permissions');
         Route::post('permissions', [RolePermissionController::class,'permissionsStore'])->name(name: 'permissions.store');
 

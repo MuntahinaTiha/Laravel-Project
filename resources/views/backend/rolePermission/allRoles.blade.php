@@ -1,5 +1,7 @@
 @extends('backend.layout')
 @section('backend_content')
+
+
     <div class="card p-4">
         <div class="d-flex justify-content-between align-items-center">
             <p class="mb-0">Roles</p>
@@ -18,7 +20,11 @@
                     <td>{{ ++$key }}</td>
                     <td>{{ $role->name }}</td>
                     <td>
-                        <a href="{{ route('dashboard.rolePermission.permissions', $role->id) }}"><iconify-icon icon="fluent:key-24-regular" width="24" height="32"></iconify-icon></a>
+                        <div  class="d-flex justify-content-evenly">
+                            <a href="{{ route('dashboard.rolePermission.edit.role', $role->id) }}"><iconify-icon icon="material-symbols-light:person-edit-outline" width="30" height="30"></iconify-icon></a>
+                            <a class="text-danger" href="{{ route('dashboard.rolePermission.delete.role', $role->id) }}"><iconify-icon icon="fluent:delete-12-regular" width="24" height="24"></iconify-icon></a>
+                            <a href="{{ route('dashboard.rolePermission.permissions', $role->id) }}"><iconify-icon icon="fluent:key-24-regular" width="24" height="32"></iconify-icon></a>
+                        </div>
                     </td>
                 </tr>
 

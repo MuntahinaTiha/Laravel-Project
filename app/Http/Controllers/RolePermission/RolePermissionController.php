@@ -159,6 +159,22 @@ class RolePermissionController extends Controller
         return view('backend.rolePermission.allRoles', compact('roles'));
     }
 
+//* PENDING    //* editRole
+    public function editRole($id){
+    $editRole = User::find($id);
+    dd($editRole);
+    }
+
+    //* deleteRole
+    public function deleteRole($id){
+    User::find($id)->delete();
+    //  * SweetAlert notification
+        Swal::success([
+        'title' => 'Role Deleted Successfully!',
+           ]);
+    return back();
+    }
+
     //* permissions
     public function permissions($id){
         $role = Role::find($id);
