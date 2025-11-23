@@ -1,10 +1,11 @@
 <?php
 
 
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Backend\Category\CategoryController;
 use App\Http\Controllers\Backend\MyProfile\MyProfileController;
 use App\Http\Controllers\RolePermission\RolePermissionController;
-use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
@@ -32,7 +33,7 @@ Route::prefix('dashboard/')->name('dashboard.')->middleware(['auth', 'verified']
 
 
     //*ROLE & PERMISSION
-    Route::prefix('role-permission/')->name('rolePermission.')->group(function(){
+    Route::prefix('role-permission/')->middleware('can:edit')->name('rolePermission.')->group(function(){
         Route::get('create-user', [RolePermissionController::class,'createUser'])->name(name: 'create.user');
         Route::post('create-user', [RolePermissionController::class,'storeUser'])->name(name: 'store.user');
         Route::get('list-users', [RolePermissionController::class,'listUsers'])->name(name: 'list.users');
@@ -57,7 +58,18 @@ Route::prefix('dashboard/')->name('dashboard.')->middleware(['auth', 'verified']
     });
 
 
+    //* CATEGORY
+    Route::prefix('category/')->name('category.')->group(function(){
+        Route::get('/', [CategoryController::class,'index'])->name(name: 'index');
+        Route::post('/', [CategoryController::class,'categoryStore'])->name(name: 'store');
+        Route::get('/view', [CategoryController::class,'categoryView'])->name(name: 'view');
+        Route::get('delete/{id}', [CategoryController::class, 'categoryDelete'])->name('delete');
+    });
+
+
 });
+
+
 
 
 //* FRONTEND ROUTES

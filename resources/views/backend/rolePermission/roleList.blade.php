@@ -3,7 +3,7 @@
     <div class="card">
         <div class="card-header d-flex justify-content-between align-items-center">
             <p class="mb-0">Assign Role</p>
-            <a href="" class="btn btn-primary btn-sm">Create Role</a>
+            <a href="{{ route('dashboard.rolePermission.create.role') }}" class="btn btn-primary btn-sm">Create Role</a>
         </div>
 
         <div class="card-body">

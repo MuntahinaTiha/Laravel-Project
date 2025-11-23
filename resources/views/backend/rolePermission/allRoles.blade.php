@@ -5,7 +5,7 @@
     <div class="card p-4">
         <div class="d-flex justify-content-between align-items-center">
             <p class="mb-0">Roles</p>
-            <a href="" class="btn btn-primary btn-sm">Create New Role</a>
+            <a href="{{ route('dashboard.rolePermission.create.role') }}" class="btn btn-primary btn-sm">Create New Role</a>
         </div>
 
         <div class="card-body table-responsive">

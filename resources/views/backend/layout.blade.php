@@ -24,6 +24,8 @@
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="../assets/img/favicon/favicon.ico" />
 
+    @stack('backend_css')
+
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -135,6 +137,13 @@
               <a href="index.html" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-home-circle"></i>
                 <div data-i18n="Analytics">Dashboard</div>
+              </a>
+            </li>
+
+            <li class="menu-item {{ Route::is('dashboard.category.*') ? 'active':'' }}">
+              <a href="{{ route('dashboard.category.index') }}" class="menu-link">
+                <iconify-icon icon="iconamoon:category-light" width="24" height="24"></iconify-icon> &nbsp; &nbsp;
+                <div data-i18n="Analytics">Categories</div>
               </a>
             </li>
 
