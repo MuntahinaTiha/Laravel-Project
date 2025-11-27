@@ -56,9 +56,41 @@ class CategoryController extends Controller
 
     //* categoryView
     public function categoryView(){
-        $categories = Category::get();
+        $categories = Category::with('parents')->get();
+        // dd($categories);
         return view('backend.category.viewCategory', compact('categories'));
     }
+
+    //*categoryDelete
+    public function categoryEdit($slug){
+        $edit_category = Category::where('slug', $slug)->first();
+        $categories = Category::select('id','title')->get();
+        return view('backend.category.edit', compact('edit_category', 'categories'));
+    }
+
+
+    //* categoryUpdate
+    public function categoryUpdate(Request $request, $slug){
+        $update_category = Category::where('slug', $slug)->first();
+        dd($update_category);
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     //* categoryDelete
     public function categoryDelete($id){

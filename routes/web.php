@@ -63,6 +63,10 @@ Route::prefix('dashboard/')->name('dashboard.')->middleware(['auth', 'verified']
         Route::get('/', [CategoryController::class,'index'])->name(name: 'index');
         Route::post('/', [CategoryController::class,'categoryStore'])->name(name: 'store');
         Route::get('/view', [CategoryController::class,'categoryView'])->name(name: 'view');
+        Route::get('/edit/{slug}', [CategoryController::class,'categoryEdit'])->name(name: 'edit');
+        Route::put('/update/{slug}', [CategoryController::class,'categoryUpdate'])->name(name: 'update');
+
+
         Route::get('delete/{id}', [CategoryController::class, 'categoryDelete'])->name('delete');
     });
 

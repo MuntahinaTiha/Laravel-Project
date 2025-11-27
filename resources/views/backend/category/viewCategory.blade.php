@@ -28,13 +28,16 @@
                     <tr class="text-center">
                         <td>{{ ++$key }}</td>
                         <td>{{ $category->title }}</td>
-                        <td>Parent</td>
-                        <td>{{ $category->meta_title ? $category->meta_title: '----------' }}</td>
-                        <td>{{ $category->meta_description ? $category->meta_description: '----------' }}</td>
-                        <td>{{ $category->meta_keywords ? $category->meta_keywords: '----------' }}</td>
+
+                        {{-- <td>{{ $category->category_id ? $category->parent->title : 'not found' }}</td> --}}
+                        <td><span class="badge bg-{{ $category->parent ? 'success' : 'danger' }}">{{ $category->parent ? $category->parent->title : 'not found' }}</span></td>
+
+                        <td>{{ $category->meta_title ? $category->meta_title: '-------' }}</td>
+                        <td>{{ $category->meta_description ? $category->meta_description: '--------' }}</td>
+                        <td>{{ $category->meta_keywords ? $category->meta_keywords: '---------' }}</td>
                         <td>
                            <div class="d-flex justify-content-evenly">
-                             <a href=""><iconify-icon icon="fa-regular:edit" width="20" height="20"></iconify-icon></a>
+                             <a href="{{ route('dashboard.category.edit', $category->slug) }}"><iconify-icon icon="fa-regular:edit" width="20" height="20"></iconify-icon></a>
                              <a class="text-danger" href="{{ route('dashboard.category.delete', $category->id) }}"><iconify-icon icon="fluent:delete-32-regular" width="22" height="22"></iconify-icon></a>
                            </div>
                         </td>
