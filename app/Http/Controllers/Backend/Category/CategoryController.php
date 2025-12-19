@@ -27,7 +27,7 @@ class CategoryController extends Controller
         $category = new Category();
         $category->title = $request->title;
         $category->slug = Str::slug($request->title) . uniqid();
-        $category->category_id = $request->category_id;
+        $category->category_id = $request->state;
         $category->meta_title = $request->meta_title;
         // $category->image = $request->category_id;
 
@@ -48,7 +48,7 @@ class CategoryController extends Controller
         $category->save();
         //  * SweetAlert notification
         Swal::success([
-        'title' => 'Category Addedd Successfully!',
+        'title' => 'Category Added Successfully!',
            ]);
         return back();
     }
@@ -57,40 +57,39 @@ class CategoryController extends Controller
     //* categoryView
     public function categoryView(){
         $categories = Category::with('parents')->get();
+
         // dd($categories);
         return view('backend.category.viewCategory', compact('categories'));
     }
 
-    //*categoryDelete
+    //*categoryEdit
     public function categoryEdit($slug){
         $edit_category = Category::where('slug', $slug)->first();
         $categories = Category::select('id','title')->get();
         return view('backend.category.edit', compact('edit_category', 'categories'));
     }
 
-
     //* categoryUpdate
     public function categoryUpdate(Request $request, $slug){
+        $request->validate([
+            'title' => "required",
+        ]);
+
+
         $update_category = Category::where('slug', $slug)->first();
-        dd($update_category);
+        $update_category->title = $request->title;
+        $update_category->slug = Str::slug($request->title) . uniqid();
+        $update_category->category_id = $request->category_id;
+        $update_category->meta_title = $request->meta_title;
+        $update_category->description = $request->meta_description;
+        $update_category->keywords = $request->meta_keywords;
+        $update_category->save();
+        //  * SweetAlert notification
+        Swal::success([
+        'title' => 'Category Updated Successfully!',
+           ]);
+        return redirect()->route('dashboard.category.view');
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     //* categoryDelete
     public function categoryDelete($id){

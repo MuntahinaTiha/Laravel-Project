@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Backend\Category\CategoryController;
 use App\Http\Controllers\Backend\MyProfile\MyProfileController;
+use App\Http\Controllers\Backend\Product\ProductController;
 use App\Http\Controllers\RolePermission\RolePermissionController;
 
 Route::get('/', function () {
@@ -51,7 +52,6 @@ Route::prefix('dashboard/')->name('dashboard.')->middleware(['auth', 'verified']
         Route::get('delete-role/{id}', [RolePermissionController::class,'deleteRole'])->name(name: 'delete.role');
 
 
-
         Route::get('permissions/{id}', [RolePermissionController::class,'permissions'])->name(name: 'permissions');
         Route::post('permissions', [RolePermissionController::class,'permissionsStore'])->name(name: 'permissions.store');
 
@@ -65,9 +65,22 @@ Route::prefix('dashboard/')->name('dashboard.')->middleware(['auth', 'verified']
         Route::get('/view', [CategoryController::class,'categoryView'])->name(name: 'view');
         Route::get('/edit/{slug}', [CategoryController::class,'categoryEdit'])->name(name: 'edit');
         Route::put('/update/{slug}', [CategoryController::class,'categoryUpdate'])->name(name: 'update');
-
-
         Route::get('delete/{id}', [CategoryController::class, 'categoryDelete'])->name('delete');
+    });
+
+
+
+    //* PRODUCTS
+    Route::prefix('product')->name('product.')->group(function(){
+        Route::get('/', [ProductController::class,'index'])->name(name: 'index');
+        Route::post('/store', [ProductController::class,'store'])->name(name: 'store');
+        Route::get('/show', [ProductController::class,'show'])->name(name: 'show');
+        Route::get('/edit/{slug}', [ProductController::class,'edit'])->name(name: 'edit');
+        Route::put('/update/{id}', [ProductController::class,'update'])->name(name: 'update');
+        Route::get('/delete-image/{id}', [ProductController::class,'imageDelete'])->name(name: 'delete');
+
+        Route::get('/delete/{id}', [ProductController::class,'deleteProduct'])->name(name: 'deleteProduct');
+
     });
 
 

@@ -2,6 +2,7 @@
 
 namespace App\Models\Category;
 
+use App\Models\Product\Product;
 use Illuminate\Database\Eloquent\Model;
 
 class Category extends Model
@@ -10,7 +11,7 @@ class Category extends Model
         return $this->belongsTo(Category::class, 'category_id');
     }
 
-    // public function child(){
-    //     return $this->belongsTo(Category::class);
-    // }
+    public function products(){
+        return $this->hasMany(Product::class);
+    }
 }

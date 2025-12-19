@@ -27,7 +27,7 @@
     <div class="card p-3">
         <div class="card-header">
             <div class="d-flex justify-content-between align-items-center">
-                <p class="mb-0">Add Category</p>
+                <p class="mb-0">Update Category</p>
                 <a href="{{ route('dashboard.category.view') }}" class="btn btn-primary btn-sm p-2"
                     style="display:inline-flex; align-items:center; line-height: 0;">View All Category
                     <span class="ms-2 pt-2"><iconify-icon icon="lets-icons:view-alt" width="22"
@@ -50,10 +50,11 @@
                     </div>
 
                     <div class="col-lg-6">
-                        <select class="js-example-basic-single form-control" name="state">
+                        <select class="js-example-basic-single form-control" name="category_id">
+                            {{-- name state --}}
                             <option value="AL" selected disabled>---Select Category---</option>
                             @foreach ($categories as $category)
-                                <option {{ $category->id == $edit_category->id ? 'selected' : '' }} value="{{ $category->id }}">{{ $category->title }}</option>
+                            <option value="{{  $category->id }}" {{ $category->id == $edit_category->category_id ? 'selected' : '' }}>{{ $category->title }}</option>
                                 {{-- <option {{ $category->id == $edit_category->category_id ? 'selected' : '' }} value="{{ $category->id }}">{{ $category->title }}</option> --}}
                             @endforeach
                         </select>
@@ -76,7 +77,7 @@
                     </div> --}}
 
                     <div class="col-lg-12">
-                        <button class="btn btn-primary mt-3 w-100">Submit</button>
+                        <button class="btn btn-primary mt-3 w-100">Update</button>
                     </div>
                 </div>
             </form>
