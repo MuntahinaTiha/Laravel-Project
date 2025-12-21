@@ -6,11 +6,10 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Backend\Category\CategoryController;
 use App\Http\Controllers\Backend\MyProfile\MyProfileController;
 use App\Http\Controllers\Backend\Product\ProductController;
+use App\Http\Controllers\Frontend\FrontendController;
 use App\Http\Controllers\RolePermission\RolePermissionController;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -90,6 +89,10 @@ Route::prefix('dashboard/')->name('dashboard.')->middleware(['auth', 'verified']
 
 
 //* FRONTEND ROUTES
+
+
+Route::get('/', [FrontendController::class,'index'])->name(name: 'home.index');
+
 
 require __DIR__.'/auth.php';
 
