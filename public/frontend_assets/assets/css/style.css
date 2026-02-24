@@ -808,11 +808,15 @@ body {
     width: 50px;
     height: 50px;
     background: var(--gren-gray-scale-100);
-    color: #000;
     border-radius: 50%;
     margin: 0 20px;
     cursor: pointer;
 }
+/* #product .details .row .bag a{
+    color: #000;
+} */
+
+
 
 #product .details .row ul {
     list-style-type: none;
@@ -2835,7 +2839,7 @@ footer .footer_wrap .media a span {
 footer .footer_wrap .media a:hover {
     background-color: var(--branding-success);
     color: var(--gray-scale-white);
-    
+
 }
 
 /***** HOME FOOTER END *****/
@@ -3521,7 +3525,7 @@ footer hr {
 
 /***** End cart_sidebar *****/
 
-
+/* start */
 #secondary_heading .cart_parent {
     display: flex;
     align-items: center;
@@ -3589,4 +3593,18 @@ footer hr {
     cursor: pointer;
     transition: 0.5s;
 }
+/* end */
 
+
+/***** CART BADGE  *****/
+.body{
+    position: relative;
+}
+.count_cart{
+    position: fixed;
+    bottom: 10px;
+    right: 20px;
+}
+
+
+/***** CART BADGE END  *****/

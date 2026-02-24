@@ -1,7 +1,6 @@
 @extends('frontend.layout')
 
 @section('frontend_content')
-
     <!-- =============== SHOPERY START ==================== -->
     <section id="shopery">
         <div class="container">
@@ -10,7 +9,8 @@
                 <div>
                     <div class="row ">
                         <div class="col-lg-6 col-12 image">
-                            <img class="img-fluid" src="{{ asset('frontend_assets/assets/images/shopery.png') }}" alt="">
+                            <img class="img-fluid" src="{{ asset('frontend_assets/assets/images/shopery.png') }}"
+                                alt="">
 
                             <div class="shape d-lg-block d-none">
                                 <h4>70% </h4>
@@ -22,8 +22,8 @@
                             <span class="main">welcome to shopery</span>
                             <h4>Fresh & Healthy Organic Food</h4>
                             <p>Free shipping on all your order. we deliver, you enjoy</p>
-                            <a href="#">Shop now <span><iconify-icon icon="majesticons:arrow-right-line" width="21"
-                                        height="21"></iconify-icon></span></a>
+                            <a href="#">Shop now <span><iconify-icon icon="majesticons:arrow-right-line"
+                                        width="21" height="21"></iconify-icon></span></a>
                         </div>
                     </div>
                 </div>
@@ -31,7 +31,8 @@
                 <div>
                     <div class="row ">
                         <div class="col-lg-6 col-12 image">
-                            <img class="img-fluid" src="{{ asset('frontend_assets/assets/images/shopery.png') }}" alt="">
+                            <img class="img-fluid" src="{{ asset('frontend_assets/assets/images/shopery.png') }}"
+                                alt="">
 
                             <div class="shape d-lg-block d-none">
                                 <h4>70% </h4>
@@ -43,8 +44,8 @@
                             <span class="main">welcome to shopery</span>
                             <h4>Fresh & Healthy Organic Food</h4>
                             <p>Free shipping on all your order. we deliver, you enjoy</p>
-                            <a href="#">Shop now <span><iconify-icon icon="majesticons:arrow-right-line" width="21"
-                                        height="21"></iconify-icon></span></a>
+                            <a href="#">Shop now <span><iconify-icon icon="majesticons:arrow-right-line"
+                                        width="21" height="21"></iconify-icon></span></a>
                         </div>
                     </div>
                 </div>
@@ -52,7 +53,8 @@
                 <div>
                     <div class="row ">
                         <div class="col-lg-6 col-12 image">
-                            <img class="img-fluid" src="{{ asset('frontend_assets/assets/images/shopery.png') }}" alt="">
+                            <img class="img-fluid" src="{{ asset('frontend_assets/assets/images/shopery.png') }}"
+                                alt="">
 
                             <div class="shape d-lg-block d-none">
                                 <h4>70% </h4>
@@ -64,8 +66,8 @@
                             <span class="main">welcome to shopery</span>
                             <h4>Fresh & Healthy Organic Food</h4>
                             <p>Free shipping on all your order. we deliver, you enjoy</p>
-                            <a href="#">Shop now <span><iconify-icon icon="majesticons:arrow-right-line" width="21"
-                                        height="21"></iconify-icon></span></a>
+                            <a href="#">Shop now <span><iconify-icon icon="majesticons:arrow-right-line"
+                                        width="21" height="21"></iconify-icon></span></a>
                         </div>
                     </div>
                 </div>
@@ -139,60 +141,65 @@
             <div class="row product_boxes">
 
                 @forelse ($products as $product)
-
-
-                <div class="product filter_body col-lg-3 p-0" data-stock="true" data-id="{{ $product->title . $product->id }}"
-                    data-name="{{ $product->title }}" data-price="{{ $product->price }}" data-img="{{ asset( 'storage/product_images/' . $product->productImages[0]->image_name) }}">
-                    <div class="filter vagetable">
-                        <span class="sale">Sale 50%</span>
-                        <a href="stock.html">
-                            <img class="img-fluid" src="{{ asset( 'storage/product_images/' . $product->productImages[0]->image_name) }}" alt="">
-                        </a>
-                        <div class="details">
-                            <div class="row justify-content-between align-items-center ">
-                                <div class="col-8">
-                                    <h4 class="m-0">Red Tomatos</h4>
-                                    <b>{{ $product->price }}</b>
-                                    <del>$20.99</del>
-                                    <div class="rate">
-                                        <ul>
-                                            <li>
-                                                <iconify-icon icon="material-symbols-light:star" width="18"
-                                                    height="18"></iconify-icon>
-                                            </li>
-                                            <li>
-                                                <iconify-icon icon="material-symbols-light:star" width="18"
-                                                    height="18"></iconify-icon>
-                                            </li>
-                                            <li>
-                                                <iconify-icon icon="material-symbols-light:star" width="18"
-                                                    height="18"></iconify-icon>
-                                            </li>
-                                            <li>
-                                                <iconify-icon icon="material-symbols-light:star" width="18"
-                                                    height="18"></iconify-icon>
-                                            </li>
-                                            <li>
-                                                <iconify-icon icon="material-symbols-light:star" width="18"
-                                                    height="18"></iconify-icon>
-                                            </li>
-                                        </ul>
+                    <div class="product filter_body col-lg-3 p-0" data-stock="true"
+                        data-id="{{ $product->title . $product->id }}" data-name="{{ $product->title }}"
+                        data-price="{{ $product->price }}"
+                        data-img="{{ asset('storage/product_images/' . $product->productImages[0]->image_name) }}">
+                        <div class="filter vagetable">
+                            <span class="sale">Sale 50%</span>
+                            <a href="./stock.html"></a>
+                            <img class="img-fluid"
+                                src="{{ asset('storage/product_images/' . $product->productImages[0]->image_name) }}"
+                                alt="">
+                            </a>
+                            <div class="details">
+                                <div class="row justify-content-between align-items-center ">
+                                    <div class="col-8">
+                                        <h4 class="m-0">{{ $product->title }}</h4>
+                                        <b>${{ $product->price }}</b>
+                                        <del>${{ $product->discount_price }}</del>
+                                        <div class="rate">
+                                            <ul>
+                                                <li>
+                                                    <iconify-icon icon="material-symbols-light:star" width="18"
+                                                        height="18"></iconify-icon>
+                                                </li>
+                                                <li>
+                                                    <iconify-icon icon="material-symbols-light:star" width="18"
+                                                        height="18"></iconify-icon>
+                                                </li>
+                                                <li>
+                                                    <iconify-icon icon="material-symbols-light:star" width="18"
+                                                        height="18"></iconify-icon>
+                                                </li>
+                                                <li>
+                                                    <iconify-icon icon="material-symbols-light:star" width="18"
+                                                        height="18"></iconify-icon>
+                                                </li>
+                                                <li>
+                                                    <iconify-icon icon="material-symbols-light:star" width="18"
+                                                        height="18"></iconify-icon>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="col-4 bag_icon">
+                                        <span class="bag add-to-cart">
+                                            <a href="{{ route('frontend.add.to.cart', $product->id) }}"><iconify-icon
+                                                    icon="teenyicons:bag-outline" width="24"
+                                                    height="24"></iconify-icon></a></span>
                                     </div>
                                 </div>
-                                <div class="col-4 bag_icon">
-                                    <span class="bag add-to-cart"><iconify-icon icon="teenyicons:bag-outline" width="24"
-                                            height="24"></iconify-icon></span>
-                                </div>
                             </div>
+                            <span class="eye"><iconify-icon icon="bi:eye" width="20"
+                                    height="20"></iconify-icon></span>
+                            <span class="heart add-to-wishlist"><iconify-icon icon="bi:heart" width="20"
+                                    height="20"></iconify-icon></span>
                         </div>
-                        <span class="eye"><iconify-icon icon="bi:eye" width="20" height="20"></iconify-icon></span>
-                        <span class="heart add-to-wishlist"><iconify-icon icon="bi:heart" width="20"
-                                height="20"></iconify-icon></span>
                     </div>
-                </div>
 
                 @empty
-                    <p>No Product Found!</p>
+                    <h4 class="text-center text-danger">No Product Found!</h4>
                 @endforelse
 
 
@@ -206,7 +213,7 @@
 
 
     <!-- =============== FEATURED PRODUCT START ==================== -->
-     <!-- ========== Start featured_products ========== -->
+    <!-- ========== Start featured_products ========== -->
     <section id="featured_products">
         <div class="container">
             <div class="head">
@@ -215,11 +222,14 @@
             <div class="row justify-content-between">
 
                 <div class="product filter_body col-lg-2 p-0" data-stock="true" data-id="Green Lettuce"
-                    data-name="Green Lettuce" data-price="14.99" data-img="{{ asset('frontend_assets/assets/images/Featured Products/2.png') }}">
+                    data-name="Green Lettuce" data-price="14.99"
+                    data-img="{{ asset('frontend_assets/assets/images/Featured Products/2.png') }}">
                     <div class="filter_box">
                         <span class="sale">Sale 50%</span>
                         <a href="./stock.html">
-                            <img class="img-fluid" style="height: 230px;" src="{{ asset('frontend_assets/assets/images/Featured Products/2.png') }}" alt="">
+                            <img class="img-fluid" style="height: 230px;"
+                                src="{{ asset('frontend_assets/assets/images/Featured Products/2.png') }}"
+                                alt="">
                         </a>
                         <div class="details">
                             <div class="row justify-content-between align-items-center ">
@@ -253,12 +263,13 @@
                                     </div>
                                 </div>
                                 <div class="col-4 bag_icon">
-                                    <span class="bag add-to-cart"><iconify-icon icon="teenyicons:bag-outline" width="18"
-                                            height="18"></iconify-icon></span>
+                                    <span class="bag add-to-cart"><iconify-icon icon="teenyicons:bag-outline"
+                                            width="18" height="18"></iconify-icon></span>
                                 </div>
                             </div>
                         </div>
-                        <span class="eye"><iconify-icon icon="bi:eye" width="18" height="18"></iconify-icon></span>
+                        <span class="eye"><iconify-icon icon="bi:eye" width="18"
+                                height="18"></iconify-icon></span>
                         <span class="heart add-to-wishlist"><iconify-icon icon="bi:heart" width="18"
                                 height="18"></iconify-icon></span>
                     </div>
@@ -278,7 +289,7 @@
         <div class="popup-content">
             <span class="close-btn">&times;</span>
             <div class="popup-body">
-                <img src="./assets/images/Advertise.png" alt="Offer" class="popup-img">
+                <img src="{{ asset('frontend_assets/assets/images/Advertise.png') }}" alt="Offer" class="popup-img">
                 <div class="popup-text">
                     <h2>Subscribe to Our <br> Newsletter</h2>
                     <p>
@@ -298,7 +309,5 @@
         </div>
     </div>
     <!-- =============== ADD END ==================== -->
-
-
-
 @endsection
+

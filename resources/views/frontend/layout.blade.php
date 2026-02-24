@@ -20,11 +20,18 @@
     <!-- BOOTSTRAP 5.3 -->
     <link rel="stylesheet" href="{{ asset('frontend_assets/assets/css/bootstrap.min.css') }}">
     <!-- VENO BOX -->
-    <link href="{{ asset('frontend_assets/assets/Yet-Another-jQuery-Responsive-Lightbox-Plugin-VenoBox/src/venobox.css') }}" rel="stylesheet" />
+    <link
+        href="{{ asset('frontend_assets/assets/Yet-Another-jQuery-Responsive-Lightbox-Plugin-VenoBox/src/venobox.css') }}"
+        rel="stylesheet" />
+
+        @stack('frontend_css')
+        
     <!-- STYLE CSS -->
     <link rel="stylesheet" href="{{ asset('frontend_assets/assets/css/style.css') }}">
     <!-- RESPONSIVE CSS -->
     <link rel="stylesheet" href="{{ asset('frontend_assets/assets/css/responsive.css') }}">
+
+
 </head>
 
 <body>
@@ -110,7 +117,7 @@
     <!-- =============== HEADING TWO END ==================== -->
 
 
-     <!-- Notification Toast -->
+    <!-- Notification Toast -->
     <div id="toast" class="toast-message"></div>
 
 
@@ -137,7 +144,7 @@
             </div>
 
             <div class="cart-actions">
-                <a class="checkout" href="checkout.html">Checkout</a>
+                <a class="checkout" href="{{ route('frontend.checkout') }}">Checkout</a>
                 <a class="" href="cart.html" id="goToCart" class="btn primary">Go to Cart</a>
             </div>
         </div>
@@ -158,7 +165,8 @@
                     <button class="btn btn-secondary dropdown-toggle category_bar " type="button"
                         data-bs-toggle="dropdown" aria-expanded="false">
 
-                        <span><iconify-icon icon="basil:menu-solid" width="24" height="24"></iconify-icon></span>
+                        <span><iconify-icon icon="basil:menu-solid" width="24"
+                                height="24"></iconify-icon></span>
                         <span class="main_text">All Categories</span>
                         <span><iconify-icon icon="iconamoon:arrow-down-2-light" width="24"
                                 height="24"></iconify-icon></span>
@@ -247,7 +255,8 @@
                 </ul>
 
                 <div class="phone">
-                    <span><iconify-icon icon="line-md:phone-call-loop" width="23" height="23"></iconify-icon></span>
+                    <span><iconify-icon icon="line-md:phone-call-loop" width="23"
+                            height="23"></iconify-icon></span>
                     <a href="tel:(219) 555-0114">(219) 555-0114</a>
                 </div>
 
@@ -259,7 +268,8 @@
 
 
     <!-- =============== OFFCANVAS START ==================== -->
-    <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+    <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample"
+        aria-labelledby="offcanvasExampleLabel">
         <div class="offcanvas-header">
             <a href="#"><img src="./assets/images/Logo.png" alt=""></a>
             <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
@@ -358,7 +368,8 @@
                 </div>
 
                 <div class="col-3 footer_box">
-                    <span><iconify-icon icon="iconamoon:category-thin" width="24" height="24"></iconify-icon></span>
+                    <span><iconify-icon icon="iconamoon:category-thin" width="24"
+                            height="24"></iconify-icon></span>
                     <p class="m-0">Category</p>
                 </div>
 
@@ -392,7 +403,8 @@
                     <iconify-icon icon="uil:search" width="24" height="24"></iconify-icon>
                 </button>
 
-                <span class="close"><iconify-icon icon="ic:round-close" width="24" height="24"></iconify-icon></span>
+                <span class="close"><iconify-icon icon="ic:round-close" width="24"
+                        height="24"></iconify-icon></span>
             </form>
 
             <div class="filter_cart">
@@ -567,10 +579,89 @@
 
 
 
+
     @yield('frontend_content')
 
+    @php
+        $cart = session('cart', []);
+        $qty = array_sum(array_column($cart, 'qty'));
+    @endphp
 
 
+    <!-- =============== CART OFFCANVAS ==================== -->
+
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="count" aria-labelledby="countLabel">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="countLabel">Your Cart</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+
+            @php
+                $totalAmount = 0;
+            @endphp
+
+            @forelse ($cart as $id => $data)
+
+        @php
+            $totalAmount += $data['price'] * $data['qty'];
+        @endphp
+
+            <div class="row mb-3 align-items-center">
+                <div class="col-2">
+                    <img class="img-fluid" src="{{ asset('storage/product_images/' . $data['image']) }}" alt="">
+                </div>
+                <div class="col-8">
+                    <p class="mb-0 pb-0">{{ $data['title'] }}</p>
+                    <p class="mb-0 pb-0">{{ $data['descriptions'] }}</p>
+                    <b>Price : {{ $data['price'] }}</b>
+                    <b>Qty : {{ $data['qty'] }}</b>
+                </div>
+                <div class="col-2">
+                    <a class="text-danger" href="{{ route('frontend.remove.cart' , $id) }}"><iconify-icon icon="fluent:delete-20-regular" width="20" height="20"></iconify-icon></a>
+                </div>
+            </div>
+
+
+            @empty
+            <p class="text-center text-danger">No Cart Found</p>
+            @endforelse
+
+            <b>Sub-Total = {{ $totalAmount }}৳  </b>
+
+            <a href="{{ route('frontend.checkout') }}" class="btn btn-outline-success w-100">Checkout</a>
+
+        </div>
+    </div>
+
+    {{-- @foreach (session('cart') as $data)
+       @dd($data)
+    @endforeach --}}
+
+    <!-- =============== CART OFFCANVAS END ==================== -->
+
+
+
+    @php
+        $cart = session('cart', []);
+        $qty = array_sum(array_column($cart, 'qty'));
+    @endphp
+
+    <!-- =============== CART BADGE ==================== -->
+    <div class="count_cart">
+        <button type="button" class="btn btn-success position-relative" data-bs-toggle="offcanvas"
+            data-bs-target="#count" aria-controls="count">
+            <span class="icon"><iconify-icon icon="tdesign:cart-add-filled" width="24"
+                    height="24"></iconify-icon></span>
+            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                {{ $qty ? $qty : 0 }}
+                <span class="visually-hidden">unread messages</span>
+            </span>
+        </button>
+    </div>
+    <!-- =============== CART BADGE END ==================== -->
+
+    {{-- @dd($qty); --}}
 
 
     <!-- =============== HOME FOOTER START ==================== -->
@@ -623,21 +714,29 @@
                         <h3>Instagram</h3>
                         <div class="row justify-content-between py-4">
                             <div class="insta col-lg-3"><img class="img img-fluid" style="width: 100%;"
-                                    src="{{ asset('frontend_assets/assets/images/footer/insta_1.png') }}" alt=""></div>
+                                    src="{{ asset('frontend_assets/assets/images/footer/insta_1.png') }}"
+                                    alt=""></div>
                             <div class="insta col-lg-3"><img class="img img-fluid" style="width: 100%;"
-                                    src="{{ asset('frontend_assets/assets/images/footer/insta_2.png') }}" alt=""></div>
+                                    src="{{ asset('frontend_assets/assets/images/footer/insta_2.png') }}"
+                                    alt=""></div>
                             <div class="insta col-lg-3"><img class="img img-fluid" style="width: 100%;"
-                                    src="{{ asset('frontend_assets/assets/images/footer/insta_3.png') }}" alt=""></div>
+                                    src="{{ asset('frontend_assets/assets/images/footer/insta_3.png') }}"
+                                    alt=""></div>
                             <div class="insta col-lg-3"><img class="img img-fluid" style="width: 100%;"
-                                    src="{{ asset('frontend_assets/assets/images/footer/insta_4.png') }}" alt=""></div>
+                                    src="{{ asset('frontend_assets/assets/images/footer/insta_4.png') }}"
+                                    alt=""></div>
                             <div class="insta col-lg-3 py-3"><img class="img img-fluid" style="width: 100%;"
-                                    src="{{ asset('frontend_assets/assets/images/footer/insta_5.png') }}" alt=""></div>
+                                    src="{{ asset('frontend_assets/assets/images/footer/insta_5.png') }}"
+                                    alt=""></div>
                             <div class="insta col-lg-3 py-3"><img class="img img-fluid" style="width: 100%;"
-                                    src="{{ asset('frontend_assets/assets/images/footer/insta_6.png') }}" alt=""></div>
+                                    src="{{ asset('frontend_assets/assets/images/footer/insta_6.png') }}"
+                                    alt=""></div>
                             <div class="insta col-lg-3 py-3"><img class="img img-fluid" style="width: 100%;"
-                                    src="{{ asset('frontend_assets/assets/images/footer/insta_7.png') }}" alt=""></div>
+                                    src="{{ asset('frontend_assets/assets/images/footer/insta_7.png') }}"
+                                    alt=""></div>
                             <div class="insta col-lg-3 py-3"><img class="img img-fluid" style="width: 100%;"
-                                    src="{{ asset('frontend_assets/assets/images/footer/insta_8.png') }}" alt=""></div>
+                                    src="{{ asset('frontend_assets/assets/images/footer/insta_8.png') }}"
+                                    alt=""></div>
                         </div>
                     </div>
 
@@ -656,17 +755,19 @@
                 <div>
                     <div class="row justify-content-between">
                         <div class="col-lg-3 media pt-3">
-                            <a href="https://www.facebook.com/share/19ap6k5GVj/"><span><iconify-icon icon="jam:facebook"
-                                        width="24" height="24"></iconify-icon></span></a>
+                            <a href="https://www.facebook.com/share/19ap6k5GVj/"><span><iconify-icon
+                                        icon="jam:facebook" width="24" height="24"></iconify-icon></span></a>
                             <a
                                 href="https://l.facebook.com/l.php?u=https%3A%2F%2Flinkedin.com%2Fin%2Fmuntahina-islam-tiha-733b18376%3Ffbclid%3DIwZXh0bgNhZW0CMTAAYnJpZBExZG5YOXBIMDVmTGI0ak1uTQEeOZP_lvt9DCtyp-Se3OLleVkinHUifxRSHkACXGjcokqJJUP6_Q9kmMwhuQI_aem_ue7ZSm9USfAGJjYQ33XFKg&h=AT2_yQUkYBxcCZb-UpZnuyDZn64X5LDqpIuaGEiKXI7cw5SbkdYT0ITLZQCyq5ylYlIg2lTvVU5ibYNrZkj6cNOHmFb9QXdzg6wKCP7AYEd1k63isIA_6VmXZL-J7jIPDNEF"><span><iconify-icon
-                                        icon="ri:twitter-fill" width="24" height="24"></iconify-icon></span></a>
+                                        icon="ri:twitter-fill" width="24"
+                                        height="24"></iconify-icon></span></a>
                             <a
                                 href="https://l.facebook.com/l.php?u=https%3A%2F%2Flinkedin.com%2Fin%2Fmuntahina-islam-tiha-733b18376%3Ffbclid%3DIwZXh0bgNhZW0CMTAAYnJpZBExZG5YOXBIMDVmTGI0ak1uTQEeOZP_lvt9DCtyp-Se3OLleVkinHUifxRSHkACXGjcokqJJUP6_Q9kmMwhuQI_aem_ue7ZSm9USfAGJjYQ33XFKg&h=AT2_yQUkYBxcCZb-UpZnuyDZn64X5LDqpIuaGEiKXI7cw5SbkdYT0ITLZQCyq5ylYlIg2lTvVU5ibYNrZkj6cNOHmFb9QXdzg6wKCP7AYEd1k63isIA_6VmXZL-J7jIPDNEF"><span><iconify-icon
                                         icon="jam:pinterest" width="24" height="24"></iconify-icon></span></a>
                             <a
                                 href="https://l.facebook.com/l.php?u=https%3A%2F%2Flinkedin.com%2Fin%2Fmuntahina-islam-tiha-733b18376%3Ffbclid%3DIwZXh0bgNhZW0CMTAAYnJpZBExZG5YOXBIMDVmTGI0ak1uTQEeOZP_lvt9DCtyp-Se3OLleVkinHUifxRSHkACXGjcokqJJUP6_Q9kmMwhuQI_aem_ue7ZSm9USfAGJjYQ33XFKg&h=AT2_yQUkYBxcCZb-UpZnuyDZn64X5LDqpIuaGEiKXI7cw5SbkdYT0ITLZQCyq5ylYlIg2lTvVU5ibYNrZkj6cNOHmFb9QXdzg6wKCP7AYEd1k63isIA_6VmXZL-J7jIPDNEF"><span><iconify-icon
-                                        icon="proicons:instagram" width="24" height="24"></iconify-icon></span></a>
+                                        icon="proicons:instagram" width="24"
+                                        height="24"></iconify-icon></span></a>
                         </div>
 
                         <div class="col-lg-5 pt-3 copyright">
@@ -674,11 +775,16 @@
                         </div>
 
                         <div class="col-lg-4 pt-3 payment">
-                            <a href="#"><img src="{{ asset('frontend_assets/assets/images/footer/1.png') }}" alt=""></a>
-                            <a href="#"><img src="{{ asset('frontend_assets/assets/images/footer/2.png') }}" alt=""></a>
-                            <a href="#"><img src="{{ asset('frontend_assets/assets/images/footer/3.png') }}" alt=""></a>
-                            <a href="#"><img src="{{ asset('frontend_assets/assets/images/footer/4.png') }}" alt=""></a>
-                            <a href="#"><img src="{{ asset('frontend_assets/assets/images/footer/5.png') }}" alt=""></a>
+                            <a href="#"><img src="{{ asset('frontend_assets/assets/images/footer/1.png') }}"
+                                    alt=""></a>
+                            <a href="#"><img src="{{ asset('frontend_assets/assets/images/footer/2.png') }}"
+                                    alt=""></a>
+                            <a href="#"><img src="{{ asset('frontend_assets/assets/images/footer/3.png') }}"
+                                    alt=""></a>
+                            <a href="#"><img src="{{ asset('frontend_assets/assets/images/footer/4.png') }}"
+                                    alt=""></a>
+                            <a href="#"><img src="{{ asset('frontend_assets/assets/images/footer/5.png') }}"
+                                    alt=""></a>
                         </div>
                     </div>
                 </div>
@@ -686,6 +792,7 @@
         </div>
     </footer>
     <!-- =============== HOME FOOTER END ==================== -->
+
 
 
 
@@ -705,9 +812,14 @@
     <script src="{{ asset('frontend_assets/assets/jquery.countdown-2.2.0/jquery.countdown.js') }}"></script>
     <script src="{{ asset('frontend_assets/assets/jquery.countdown-2.2.0/jquery.countdown.min.js') }}"></script>
     <!-- VENO BOX -->
-    <script src="{{ asset('frontend_assets/assets/Yet-Another-jQuery-Responsive-Lightbox-Plugin-VenoBox/src/venobox.esm.js') }}"></script>
+    <script
+        src="{{ asset('frontend_assets/assets/Yet-Another-jQuery-Responsive-Lightbox-Plugin-VenoBox/src/venobox.esm.js') }}">
+    </script>
     <!-- APP JS -->
     <script src="{{ asset('frontend_assets/assets/js/app.js') }}"></script>
+
+    @stack('frontend_js')
+
 </body>
 
 </html>
