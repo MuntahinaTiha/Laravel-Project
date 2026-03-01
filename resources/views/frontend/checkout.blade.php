@@ -38,6 +38,8 @@
                <form action="{{ route('frontend.pay') }}" method="post">
                    @csrf
 
+                   <input type="hidden" value="{{ $totalAmount }}" id="total_amount" name="total_amount">
+
                    <div class="row">
                        <div class="col-lg-8 billing_form">
                            <div class="form_head">
@@ -132,7 +134,7 @@
                                            name="payment" value="paypal">Online Payment</label>
                                </div>
                                <button type="submit" id="placeOrderBtn">Place Order</button>
-                               <button class="btn btn-primary btn-lg btn-block" id="sslczPayBtn"
+                               <button type="button" class="btn btn-primary btn-lg btn-block" id="sslczPayBtn"
                                    token="if you have any token validation"
                                    postdata="your javascript arrays or objects which requires in backend"
                                    order="If you already have the transaction generated for current order"
@@ -187,14 +189,32 @@
 
 
 
+        //    $('#sslczPayBtn').on('click', function(){
+        //     let obj = {};
+        //     obj.name = $('#name').val();
+        //     obj.phone = $('#phone').val();
+        //     obj.email = $('#email').val();
+        //     obj.address = $('#address').val();
+        //     obj.total_amount = $('#total_amount').val();
+        //     obj.currency = $('#currency').val();
+
+        //     $(this).prop('postdata', obj);
+        //    })
+
+
+
            var obj = {};
            // If you want to pass some value from frontend, you can do like this, but be aware, this value can be modified by anyone, so it's not secure to pass total_amount, store_passwd etc from frontend.
-           // obj.cus_name = $('#customer_name').val();
-           // obj.cus_phone = $('#mobile').val();
-           // obj.cus_email = $('#email').val();
-           // obj.cus_addr1 = $('#address').val();
+            obj.name = $('#name').val();
+            obj.phone = $('#phone').val();
+            obj.email = $('#email').val();
+            obj.address = $('#address').val();
+            obj.total_amount = $('#total_amount').val();
+            obj.currency = $('#currency').val();
 
            $('#sslczPayBtn').prop('postdata', obj);
+
+
 
            (function(window, document) {
                var loader = function() {
